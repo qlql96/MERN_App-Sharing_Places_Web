@@ -24,11 +24,8 @@ async function getCoordsForAddress(address) {
     );
     throw error;
   }
-  
-  console.log(data);
 
   const coordinates = data.results[0].geometry.location;
-  console.log(data.results[0]);
 
   return coordinates;
 }
