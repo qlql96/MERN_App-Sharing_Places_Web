@@ -1,4 +1,5 @@
 const uuid = require('uuid');
+const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
@@ -48,6 +49,11 @@ const getPlacesByUserId = (req, res, next) => {
 };
 
 const createPlace = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new HttpError('Invalid inputs passed, please check your data.', 422);
+  }
+
   const { title, description, coordinates, address, creator } = req.body;
   // const title = req.body.title;
   const createdPlace = {
@@ -61,7 +67,7 @@ const createPlace = (req, res, next) => {
 
   DUMMY_PLACES.push(createdPlace); //unshift(createdPlace)
 
-  res.status(201).json({place: createdPlace});
+  res.status(201).json({ place: createdPlace });
 };
 
 const updatePlace = (req, res, next) => {
@@ -75,7 +81,7 @@ const updatePlace = (req, res, next) => {
 
   DUMMY_PLACES[placeIndex] = updatedPlace;
 
-  res.status(200).json({place: updatedPlace});
+  res.status(200).json({ place: updatedPlace });
 };
 
 const deletePlace = (req, res, next) => {
