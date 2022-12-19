@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
@@ -27,7 +28,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect()
+  .connect(process.env.DB_URL)
   .then(() => {
     app.listen(5000);
   })
