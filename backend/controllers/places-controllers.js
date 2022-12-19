@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/http-error');
 const getCoordsForAddress = require('../util/location');
 const Place = require('../models/place');
+const User = require('../models/user');
 
 let DUMMY_PLACES = [
   {
@@ -79,9 +80,9 @@ const createPlace = async (req, res, next) => {
 
   const { title, description, address, creator } = req.body;
 
-  let coordinates;
+  let coordinates = null;
   try {
-    coordinates = await getCoordsForAddress(address);
+    // coordinates = await getCoordsForAddress(address);
   } catch (error) {
     return next(error);
   }
@@ -91,7 +92,10 @@ const createPlace = async (req, res, next) => {
     title,
     description,
     address,
-    location: coordinates,
+    location: {
+      lat: 40.7484474,
+      lng: -73.9871516
+    },
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
     creator
   });
