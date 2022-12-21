@@ -39,7 +39,7 @@ const NewPlace = () => {
         event.preventDefault();
         try {
             await sendRequest(
-                'http://localhost:5000/api/places',
+                process.env.REACT_APP_BACKEND_URL + '/places',
                 'POST',
                 JSON.stringify({
                     title: formState.inputs.title.value,
